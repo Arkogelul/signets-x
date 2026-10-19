@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signets de Nightberry</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <h1>Signets de Nightberry<span class="handle">@nightberry_art</span></h1>
+    <div class="summary" id="summary">Chargement des signets…</div>
+  </header>
+  <div class="banner" id="banner" hidden></div>
+  <nav class="rail" id="rail" aria-label="Catégories"></nav>
+  <main>
+    <div class="toolbar">
+      <div class="search"><input id="q" type="search" aria-label="Rechercher" placeholder="Rechercher un texte, un auteur, un @compte…" autocomplete="off"></div>
+      <div class="seg" role="group" aria-label="Type de média" id="media">
+        <button type="button" data-m="" aria-pressed="true">Tout</button>
+        <button type="button" data-m="v" aria-pressed="false">Vidéos</button>
+        <button type="button" data-m="i" aria-pressed="false">Images</button>
+        <button type="button" data-m="t" aria-pressed="false">Texte</button>
+      </div>
+      <select class="sort" id="sort" aria-label="Ordre">
+        <option value="rang">Ordre d'enregistrement</option>
+        <option value="recent">Post le plus récent</option>
+        <option value="ancien">Post le plus ancien</option>
+      </select>
+    </div>
+    <div class="status" id="status" role="status"></div>
+    <div class="grid" id="grid"></div>
+    <button type="button" class="loadmore" id="loadmore" hidden>Afficher plus</button>
+  </main>
+</div>
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
+<script src="categories.js"></script>
+<script src="drive.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
