@@ -1,4 +1,4 @@
-// Version en ligne : lit les signets et médias dans le dossier « Signets X » de ton Google Drive (lecture seule).
+// Version en ligne : lit les signets et médias dans le dossier « X Bookmarks » de ton Google Drive (lecture seule).
 (function () {
   const API = "https://www.googleapis.com/drive/v3/files";
   let jeton = null;
@@ -24,7 +24,7 @@
         scope: "https://www.googleapis.com/auth/drive.readonly",
         callback: r => r.error ? ko(new Error(r.error)) : (jeton = r.access_token, ok())
       });
-      bandeau("Connecte-toi avec le compte Google qui contient ton dossier Signets X.", "Se connecter avec Google", () => client.requestAccessToken());
+      bandeau("Connecte-toi avec le compte Google qui contient ton dossier X Bookmarks.", "Se connecter avec Google", () => client.requestAccessToken());
     });
   }
 
@@ -68,9 +68,9 @@
     ecriture: false,
     async charger() {
       await connexion();
-      bandeau("Recherche du dossier Signets X dans ton Drive…");
-      const r = await lister("name='Signets X' and mimeType='application/vnd.google-apps.folder'");
-      if (!r.length) throw new Error("dossier « Signets X » introuvable dans ce Google Drive");
+      bandeau("Recherche du dossier X Bookmarks dans ton Drive…");
+      const r = await lister("(name='X Bookmarks' or name='Signets X') and mimeType='application/vnd.google-apps.folder'");
+      if (!r.length) throw new Error("dossier « X Bookmarks » introuvable dans ce Google Drive");
       dossiers.set("", r[0].id);
       const idIndex = await idChemin("donnees/index.json");
       bandeau("Chargement des signets…");

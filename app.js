@@ -285,7 +285,7 @@
     if (stockage.mode === "fichier") {
       const b = $("banner");
       b.hidden = false;
-      b.textContent = "Lecture seule. Pour changer une catégorie, marquer un favori ou voir les derniers ajouts de l'extension, ouvre la page depuis l'icône de l'extension Signets X.";
+      b.textContent = "Lecture seule. Pour changer une catégorie, marquer un favori ou voir les derniers ajouts de l'extension, ouvre la page depuis l'icône de l'extension X Bookmarks.";
     }
     try {
       etat.items = await stockage.charger();
