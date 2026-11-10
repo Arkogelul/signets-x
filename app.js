@@ -16,6 +16,16 @@
   const etat = { items: [], vue: "tout", media: "", q: "", tri: "rang", montres: PAGE };
   const $ = id => document.getElementById(id);
 
+  // Icônes du jeu commun (_Commun/icones_ui), en SVG inline.
+  const ICONES = {
+    etoile: '<svg class="icone vide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9Z"/></svg>' +
+      '<svg class="icone plein" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9Z" fill="currentColor"/></svg>',
+    ailleurs: '<svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+    fermer: '<svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+    prec: '<svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>',
+    suiv: '<svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>'
+  };
+
   function el(tag, cls, texte) {
     const e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -181,13 +191,15 @@
     sel.value = it.categorie;
     sel.disabled = !stockage.ecriture;
     sel.addEventListener("change", () => modifier(it, { categorie: sel.value }));
-    const star = el("button", "star", "★");
+    const star = el("button", "star");
+    star.innerHTML = ICONES.etoile;
     star.type = "button";
     star.setAttribute("aria-pressed", String(!!it.favori));
     star.setAttribute("aria-label", it.favori ? "Retirer des favoris" : "Ajouter aux favoris");
     star.disabled = !stockage.ecriture;
     star.addEventListener("click", () => modifier(it, { favori: !it.favori }));
-    const lien = el("a", "open-x", "Ouvrir sur X ↗");
+    const lien = el("a", "open-x", "Ouvrir sur X");
+    lien.insertAdjacentHTML("beforeend", ICONES.ailleurs);
     lien.href = it.url; lien.target = "_blank"; lien.rel = "noopener";
     pied.append(sel, star, lien);
     carte.append(pied);
@@ -231,9 +243,9 @@
     let i = Math.max(0, index);
     lb = el("div", "lightbox");
     const img = el("img");
-    const fermer = el("button", null, "×"); fermer.type = "button"; fermer.setAttribute("aria-label", "Fermer");
-    const prec = el("button", "nav prev", "‹"); prec.type = "button"; prec.setAttribute("aria-label", "Image précédente");
-    const suiv = el("button", "nav next", "›"); suiv.type = "button"; suiv.setAttribute("aria-label", "Image suivante");
+    const fermer = el("button"); fermer.innerHTML = ICONES.fermer; fermer.type = "button"; fermer.setAttribute("aria-label", "Fermer");
+    const prec = el("button", "nav prev"); prec.innerHTML = ICONES.prec; prec.type = "button"; prec.setAttribute("aria-label", "Image précédente");
+    const suiv = el("button", "nav next"); suiv.innerHTML = ICONES.suiv; suiv.type = "button"; suiv.setAttribute("aria-label", "Image suivante");
     const montrer = () => { const m = images[i]; if (m.fichier) brancherMedia(img, m.fichier, "src"); else img.src = m.source; prec.hidden = suiv.hidden = images.length < 2; };
     prec.addEventListener("click", e => { e.stopPropagation(); i = (i - 1 + images.length) % images.length; montrer(); });
     suiv.addEventListener("click", e => { e.stopPropagation(); i = (i + 1) % images.length; montrer(); });
